@@ -18,6 +18,32 @@ mongoose.connect(process.env.DATABASE).then(() => {
     console.log('Failed to connect to database', error);
 });
 
+/* Middleware för att hantera JWT-Token */
+const verifyToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ message: 'Token saknas'});
+    }
+
+    /* Extrahera token */
+    const token = authHeader.split(' ')[1];
+    
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, username) => {
+        if (err) {
+            return res.status(401).json({ message: 'Ogiltig token'});
+        }
+
+        req.username = username;
+        next();
+    })
+}
+
+/* Skyddad route för admin-panelen */
+router.get('/admin-panel', verifyToken, (req, res) => {
+    res.json({ message: 'Välkommen till admin-panelen'});
+})
+
 router.post('/create-admin', async (req, res) => {
     try {
         /* Hämta användarnamn och lösenord */
