@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
+const menuRoutes = require('./routes/menuRoutes');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const app = express();
@@ -11,7 +12,7 @@ const cors = require('cors');
 app.use(cors());
 
 /* Routes */
-app.use('/api', authRoutes);
+app.use('/api', authRoutes, menuRoutes);
 
 /* Lyssna på port */
 app.listen(port, () => {
