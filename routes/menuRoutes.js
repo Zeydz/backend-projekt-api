@@ -12,6 +12,21 @@ router.get('/menu', async (req, res ) => {
     }
 });
 
+/* Hämta enskild meny */
+router.get('/menu/:id', async (req, res) => {
+    try {
+        const menuItem = await MenuItem.findById(req.params.id);
+
+        /* Kontrollerar ifall meny finns */
+        if(!menuItem) {
+            return res.status(404).json({ message: 'Menyn kunde inte hittas.'})
+        }
+        res.json(menuItem);
+    } catch (error) {
+        res.status(500).json({ message: error.message});
+    }
+});
+
 /* Skapa en ny meny */
 router.post('/menu', async (req, res) => {
     const menu = new MenuItem({
