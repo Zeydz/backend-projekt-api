@@ -1,6 +1,10 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const MenuItem = require('../models/Menu');
+const verifyToken = require('../routes/verifyToken');
+const cors = require('cors');
+app.use(cors());
 
 /* Hämta alla menyer */
 router.get('/menu', async (req, res ) => {
@@ -28,7 +32,7 @@ router.get('/menu/:id', async (req, res) => {
 });
 
 /* Skapa en ny meny */
-router.post('/menu', async (req, res) => {
+router.post('/menu', verifyToken, async (req, res) => {
     const menu = new MenuItem({
         itemName: req.body.itemName,
         description: req.body.description,
@@ -43,7 +47,7 @@ router.post('/menu', async (req, res) => {
 });
 
 /* Ta bort en meny */
-router.delete('/menu/:id', async (req, res) => {
+router.delete('/menu/:id', verifyToken, async (req, res) => {
     const id = req.params.id;
     try {
         const deletedMenu = await MenuItem.findByIdAndDelete(id);
@@ -53,7 +57,8 @@ router.delete('/menu/:id', async (req, res) => {
     }
 });
 
-router.put('/menu/:id',  async (req, res) => {
+/* Ändra meny */
+router.put('/menu/:id', verifyToken, async (req, res) => {
     const id = req.params.id;
     const { itemName, description, price } = req.body;
     
