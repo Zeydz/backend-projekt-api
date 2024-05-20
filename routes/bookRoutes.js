@@ -7,7 +7,7 @@ const cors = require('cors');
 app.use(cors());
 
 /*  Route för att skapa en ny bokning */
-router.post("/bookings", verifyToken, async (req, res) => {
+router.post("/bookings", async (req, res) => {
   try {
     const newBooking = await Booking.create(req.body);
     res.status(201).json(newBooking);
