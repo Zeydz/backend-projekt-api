@@ -7,7 +7,7 @@ Det här API-projektet är en backend-applikation för att hantera restaurangfun
 1. Klona projektet från GitHub-repositoriet.
 2. Navigera till rotkatalogen för projektet.
 3. Kör `npm install` för att installera alla nödvändiga paket och beroenden.
-4. Skapa en fil med namnet `.env` i rotkatalogen och konfigurera miljövariabler enligt instruktionerna i `.env.example`-filen.
+4. Skapa en fil med namnet `.env` i rotkatalogen och konfigurera miljövariabler
 
 ## Användning
 1. Starta servern genom att köra kommandot `npm start`.
