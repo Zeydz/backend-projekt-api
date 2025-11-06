@@ -1,10 +1,7 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 const MenuItem = require('../models/Menu');
 const verifyToken = require('../routes/verifyToken');
-const cors = require('cors');
-app.use(cors());
 
 /* Hämta alla menyer */
 router.get('/menu', async (req, res ) => {
@@ -57,7 +54,6 @@ router.delete('/menu/:id', verifyToken, async (req, res) => {
     }
 });
 
-/* Ändra meny */
 router.put('/menu/:id', verifyToken, async (req, res) => {
     const id = req.params.id;
     const { itemName, description, price } = req.body;

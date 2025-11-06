@@ -28,24 +28,21 @@ router.post('/create-admin', async (req, res) => {
     try {
         /* Hämta användarnamn och lösenord */
         const {username, password} = req.body;
-
         /* Validering */
         if (!username || !password) {
             return res.status(400).json({ message: 'Fel inmatning, skicka användarnamn och lösenord'})
         }
-        
         /* Skapa användare med hashat lösenord */
         const hashedPassword = await bcrypt.hash(password, 10);
         const adminUser = new User ({
             username: username,
             password: hashedPassword
         });
-
         /* Spara användaren i databasen */
         await adminUser.save()
-        res.status(201).json({ message: 'Adminanvändaren har skapts.'})
+        res.status(201).json({ message: 'Adminanvändaren har skapats.'})
     } catch (error) {
-        res.status(500).json({ message: 'Det uppstod ett fel' + error});
+        res.status(500).json({ message: 'Det uppstod ett fel: ' + error});
     }
 });
 
